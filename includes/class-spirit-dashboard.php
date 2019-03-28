@@ -103,32 +103,9 @@ class Spirit_Dashboard {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-spirit-dashboard-loader.php';
 
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-spirit-dashboard-i18n.php';
-
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/rest-spirit-dashboard.php';
 
 		$this->loader = new Spirit_Dashboard_Loader();
-
-	}
-
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the Spirit_Dashboard_i18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function set_locale() {
-
-		$plugin_i18n = new Spirit_Dashboard_i18n();
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 

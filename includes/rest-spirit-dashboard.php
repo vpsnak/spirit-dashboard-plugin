@@ -94,12 +94,13 @@ add_action('rest_api_init', function () {
 
         $all_plugins = get_plugins();
         $data_response['plugins']['count'] = count($all_plugins);
+        $data_response['plugins']['update']['plugins'] = array();
         $update_plugins = get_site_transient('update_plugins');
         $plugin_update = $update_plugins->response;
         if ($plugin_update) {
             $data_response['plugins']['update']['count'] = count($plugin_update);
             foreach ($plugin_update as $key => $plugin) {
-                $data_response['plugins']['update'][$key] = array(
+                $data_response['plugins']['update']['plugins'][$key] = array(
                     'name' => $all_plugins[$key]['Name'],
                     'url' => $plugin->url,
                     'icons' => $plugin->icons,
@@ -115,10 +116,11 @@ add_action('rest_api_init', function () {
         }
 
         $plugin_no_update = $update_plugins->no_update;
+        $data_response['plugins']['no_update']['plugins'] = array();
         if ($plugin_no_update) {
             $data_response['plugins']['no_update']['count'] = count($plugin_no_update);
             foreach ($plugin_no_update as $key => $plugin) {
-                $data_response['plugins']['no_update'][$key] = array(
+                $data_response['plugins']['no_update']['plugins'][$key] = array(
                     'name' => $all_plugins[$key]['Name'],
                     'url' => $plugin->url,
                     'icons' => $plugin->icons,
@@ -137,10 +139,11 @@ add_action('rest_api_init', function () {
         $checked_themes = $update_themes->checked;
         $themes_update = $update_themes->response;
         $data_response['themes']['count'] = count($checked_themes);
+        $data_response['themes']['update']['themes'] = array();
         if ($themes_update) {
             $data_response['themes']['update']['count'] = count($themes_update);
             foreach ($themes_update as $key => $theme) {
-                $data_response['themes']['update'][$key] = array(
+                $data_response['themes']['update']['themes'][$key] = array(
                     'name' => $theme['theme'],
                     'url' => $theme['url'],
                     'current_version' => $checked_themes[$key],

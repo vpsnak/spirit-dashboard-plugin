@@ -104,19 +104,22 @@ class Spirit_Dashboard {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/rest-spirit-dashboard.php';
 
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/plugin-update-checker/plugin-update-checker.php';
+        require 'plugin-update-checker/plugin-update-checker.php';
+
         $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
             'https://github.com/vpsnak/spirit-dashboard-plugin/',
             __FILE__,
-            'spirit-dashboard-plugin'
+            'spirit-dashboard'
         );
 
         //Optional: If you're using a private repository, specify the access token like this:
-        $myUpdateChecker->setAuthentication('6be20d0d5fbc3569f028666b9e526a0695740ae5');
+        $myUpdateChecker->setAuthentication('');
+
+        $myUpdateChecker->getVcsApi()->enableReleaseAssets();
 
         //Optional: Set the branch that contains the stable release.
-        $myUpdateChecker->setBranch('master');
-        
+        $myUpdateChecker->setBranch('production');
+
 		$this->loader = new Spirit_Dashboard_Loader();
 
 	}

@@ -16,7 +16,7 @@
  * Plugin Name:       Spirit Dashboard
  * Plugin URI:        https://github.com/vpsnak/spirit-dashboard-plugin
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Vaggelis Pallis
  * Author URI:        https://github.com/vpsnak
  * License:           GPL-2.0+

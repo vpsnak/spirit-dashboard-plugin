@@ -117,7 +117,7 @@ class Spirit_Dashboard {
         $myUpdateChecker->getVcsApi()->enableReleaseAssets();
 
         //Optional: Set the branch that contains the stable release.
-        $myUpdateChecker->setBranch('production');
+//        $myUpdateChecker->setBranch('production');
 
 		$this->loader = new Spirit_Dashboard_Loader();
 

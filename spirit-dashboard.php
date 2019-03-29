@@ -16,7 +16,7 @@
  * Plugin Name:       Spirit Dashboard
  * Plugin URI:        https://github.com/vpsnak/spirit-dashboard-plugin
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           0.0.1
+ * Version:           1.0.1
  * Author:            Vaggelis Pallis
  * Author URI:        https://github.com/vpsnak
  * License:           GPL-2.0+
@@ -34,7 +34,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 0.0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'SPIRIT_DASHBOARD_VERSION', '0.0.1' );
+define( 'SPIRIT_DASHBOARD_VERSION', '1.0.1' );
 
 /**
  * The code that runs during plugin activation.
@@ -76,6 +76,25 @@ function run_spirit_dashboard() {
 
 	$plugin = new Spirit_Dashboard();
 	$plugin->run();
+
+    require_once plugin_dir_path(__FILE__) . 'includes/plugin-update-checker/plugin-update-checker.php';
+    $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+        'https://github.com/vpsnak/spirit-dashboard-plugin/',
+        __FILE__,
+        'spirit-dashboard'
+    );
+//
+//        var_dump(plugin_dir_path(__FILE__));
+//        var_dump(plugin_dir_path(dirname(__FILE__)));
+//        var_dump(plugin_dir_path( __DIR__ ));
+
+    //Optional: If you're using a private repository, specify the access token like this:
+//    $myUpdateChecker->setAuthentication('');
+
+    $myUpdateChecker->getVcsApi()->enableReleaseAssets();
+
+    //Optional: Set the branch that contains the stable release.
+//        $myUpdateChecker->setBranch('master');
 
 }
 run_spirit_dashboard();

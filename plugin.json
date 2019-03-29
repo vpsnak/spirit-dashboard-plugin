@@ -1,0 +1,21 @@
+{
+	"name": "Spirit Dashboard",
+	"version": "0.1.1",
+	"download_url": "https://github.com/vpsnak/spirit-dashboard-plugin/archive/production.zip",
+
+	"homepage": "https://github.com/vpsnak/spirit-dashboard-plugin",
+	"requires": "4.4.0",
+	"tested": "5.1.1",
+	"last_updated": "2019-03-29 12:17:00",
+	"upgrade_notice": "Here's why you should upgrade...",
+
+	"author": "Vaggelis Pallis",
+	"author_homepage": "https://github.com/vpsnak",
+
+	"sections": {
+		"description": "This is a short description of what the plugin does. It's displayed in the WordPress admin area.",
+		"installation": "(Recommended) Installation instructions.",
+		"changelog": "(Recommended) Changelog. <p>This section will be displayed by default when the user clicks 'View version x.y.z details'.</p>",
+		"custom_section": "This is a custom section labeled 'Custom Section'."
+	}
+}

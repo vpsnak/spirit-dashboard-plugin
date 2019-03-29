@@ -9,7 +9,7 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      0.0.1
  * @package    Spirit_Dashboard
  * @subpackage Spirit_Dashboard/includes
  * @author     Vaggelis Pallis <info.vpsnak@gmail.com>

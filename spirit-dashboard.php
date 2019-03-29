@@ -25,8 +25,8 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if (!defined('WPINC')) {
+    die;
 }
 
 /**
@@ -34,34 +34,36 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 0.0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'SPIRIT_DASHBOARD_VERSION', '1.0.1' );
+define('SPIRIT_DASHBOARD_VERSION', '1.0.1');
 
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-spirit-dashboard-activator.php
  */
-function activate_spirit_dashboard() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-spirit-dashboard-activator.php';
-	Spirit_Dashboard_Activator::activate();
+function activate_spirit_dashboard()
+{
+    require_once plugin_dir_path(__FILE__) . 'includes/class-spirit-dashboard-activator.php';
+    Spirit_Dashboard_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-spirit-dashboard-deactivator.php
  */
-function deactivate_spirit_dashboard() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-spirit-dashboard-deactivator.php';
-	Spirit_Dashboard_Deactivator::deactivate();
+function deactivate_spirit_dashboard()
+{
+    require_once plugin_dir_path(__FILE__) . 'includes/class-spirit-dashboard-deactivator.php';
+    Spirit_Dashboard_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_spirit_dashboard' );
-register_deactivation_hook( __FILE__, 'deactivate_spirit_dashboard' );
+register_activation_hook(__FILE__, 'activate_spirit_dashboard');
+register_deactivation_hook(__FILE__, 'deactivate_spirit_dashboard');
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-spirit-dashboard.php';
+require plugin_dir_path(__FILE__) . 'includes/class-spirit-dashboard.php';
 
 /**
  * Begins execution of the plugin.
@@ -72,10 +74,11 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-spirit-dashboard.php';
  *
  * @since    0.0.1
  */
-function run_spirit_dashboard() {
+function run_spirit_dashboard()
+{
 
-	$plugin = new Spirit_Dashboard();
-	$plugin->run();
+    $plugin = new Spirit_Dashboard();
+    $plugin->run();
 
     require_once plugin_dir_path(__FILE__) . 'includes/plugin-update-checker/plugin-update-checker.php';
     $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
@@ -97,4 +100,5 @@ function run_spirit_dashboard() {
 //        $myUpdateChecker->setBranch('master');
 
 }
+
 run_spirit_dashboard();

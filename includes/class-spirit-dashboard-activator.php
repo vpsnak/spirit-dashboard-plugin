@@ -4,7 +4,7 @@
  * Fired during plugin activation
  *
  * @link       https://github.com/vpsnak
- * @since      1.0.0
+ * @since      0.0.1
  *
  * @package    Spirit_Dashboard
  * @subpackage Spirit_Dashboard/includes
@@ -15,7 +15,7 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.0.0
+ * @since      0.0.1
  * @package    Spirit_Dashboard
  * @subpackage Spirit_Dashboard/includes
  * @author     Vaggelis Pallis <info.vpsnak@gmail.com>
@@ -27,7 +27,7 @@ class Spirit_Dashboard_Activator {
 	 *
 	 * Long Description.
 	 *
-	 * @since    1.0.0
+	 * @since    0.0.1
 	 */
 	public static function activate() {
 

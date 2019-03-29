@@ -115,7 +115,7 @@ class Spirit_Dashboard {
         $myUpdateChecker->setAuthentication('6be20d0d5fbc3569f028666b9e526a0695740ae5');
 
         //Optional: Set the branch that contains the stable release.
-        $myUpdateChecker->setBranch('master');
+        $myUpdateChecker->setBranch('production');
         
 		$this->loader = new Spirit_Dashboard_Loader();
 

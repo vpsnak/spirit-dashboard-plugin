@@ -14,7 +14,12 @@
  * @author     Vaggelis Pallis <info.vpsnak@gmail.com>
  */
 
+require_once __DIR__ . '/application/class-spirit-plugin-route.php';
+
 add_action('rest_api_init', function () {
+    $spirit_plugin_route = new Spirit_Plugin_Route();
+    $spirit_plugin_route->register_routes();
+    
     register_rest_route('spirit-dashboard/v2', '/app', array(
         'methods' => 'GET',
         'callback' => 'get_app_data',
@@ -23,56 +28,10 @@ add_action('rest_api_init', function () {
         }
     ));
 
-    function get_plugin_collection()
-    {
-        if (!function_exists('get_plugins')) {
-            require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        }
-
-        return get_plugins();
-    }
-
-    function get_plugin_info($data)
-    {
-        if (!function_exists('get_plugins')) {
-            require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        }
-        $all_plugins = get_plugins();
-
-        if (!empty($all_plugins[$data['slug']])) {
-            return $all_plugins[$data['slug']];
-        } else {
-            return [];
-        }
-    }
-
-    function is_plugin_installed($slug)
-    {
-        if (!function_exists('get_plugins')) {
-            require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        }
-        $all_plugins = get_plugins();
-
-        if (!empty($all_plugins[$slug])) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    function upgrade_plugin($plugin_slug)
-    {
-        include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-        wp_cache_flush();
-
-        $upgrader = new Plugin_Upgrader();
-        $upgraded = $upgrader->upgrade($plugin_slug);
-
-        return $upgraded;
-    }
-
     function get_app_data()
     {
+        $plugin_api = new Spirit_Plugin_Route();
+        
         $custom_logo_id = get_theme_mod('custom_logo');
         $data_response['info'] = array(
             'name' => get_bloginfo('name'),
@@ -87,52 +46,7 @@ add_action('rest_api_init', function () {
             'last_check' => date('d-m-Y H:m', $update_core->last_checked),
         );
 
-        if (!function_exists('get_plugins')) {
-            require_once ABSPATH . 'wp-admin/includes/plugin.php';
-        }
-
-        $all_plugins = get_plugins();
-        $data_response['plugins']['count'] = count($all_plugins);
-        $data_response['plugins']['update']['plugins'] = array();
-        $update_plugins = get_site_transient('update_plugins');
-        $plugin_update = $update_plugins->response;
-        if ($plugin_update) {
-            $data_response['plugins']['update']['count'] = count($plugin_update);
-            foreach ($plugin_update as $key => $plugin) {
-                $data_response['plugins']['update']['plugins'][$key] = array(
-                    'name' => $all_plugins[$key]['Name'],
-                    'url' => $plugin->url,
-                    'icons' => $plugin->icons,
-                    'plugin_uri' => $all_plugins[$key]['PluginURI'],
-                    'author' => $all_plugins[$key]['Author'],
-                    'author_uri' => $all_plugins[$key]['AuthorURI'],
-                    'current_version' => $all_plugins[$key]['Version'],
-                    'latest_version' => $plugin->new_version,
-                );
-            }
-        } else {
-            $data_response['plugins']['update']['count'] = 0;
-        }
-
-        $plugin_no_update = $update_plugins->no_update;
-        $data_response['plugins']['no_update']['plugins'] = array();
-        if ($plugin_no_update) {
-            $data_response['plugins']['no_update']['count'] = count($plugin_no_update);
-            foreach ($plugin_no_update as $key => $plugin) {
-                $data_response['plugins']['no_update']['plugins'][$key] = array(
-                    'name' => $all_plugins[$key]['Name'],
-                    'url' => $plugin->url,
-                    'icons' => $plugin->icons,
-                    'plugin_uri' => $all_plugins[$key]['PluginURI'],
-                    'author' => $all_plugins[$key]['Author'],
-                    'author_uri' => $all_plugins[$key]['AuthorURI'],
-                    'current_version' => $all_plugins[$key]['Version'],
-                    'latest_version' => $plugin->new_version,
-                );
-            }
-        } else {
-            $data_response['plugins']['no_update']['count'] = 0;
-        }
+        $data_response['plugins'] = $plugin_api->get_plugins_data();
 
         $update_themes = get_site_transient('update_themes');
         $checked_themes = $update_themes->checked;

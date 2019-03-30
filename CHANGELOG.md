@@ -12,7 +12,7 @@ Here are some highlights:
 - [New] Created plugin endpoint to handle plugins data and actions `spirit-dashboard/v2/plugin`
 - [New] Added updater using wordpress updater to handle core / plugin / theme / translation updates
 - [New] Added silence to some directories
-
+- [New] Added readme / changelog and more accurate info about this plugin
 
 ## 1.0.1
 ###### *Mar 29, 2019*

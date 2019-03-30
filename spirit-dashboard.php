@@ -15,13 +15,16 @@
  * @wordpress-plugin
  * Plugin Name:       Spirit Dashboard
  * Plugin URI:        https://github.com/vpsnak/spirit-dashboard-plugin
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.1
+ * Description:       This plugin is used to add endpoints for listing and updating Wordpress core, plugins, themes, translations.
+ * Version:           1.1.0
  * Author:            Vaggelis Pallis
  * Author URI:        https://github.com/vpsnak
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       spirit-dashboard
+ * Requires at least: 4.4.0
+ * Tested up to: 5.1.1
+ * Stable tag: 5.1.1
  */
 
 // If this file is called directly, abort.
@@ -34,7 +37,7 @@ if (!defined('WPINC')) {
  * Start at version 0.0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('SPIRIT_DASHBOARD_VERSION', '1.0.1');
+define('SPIRIT_DASHBOARD_VERSION', '1.1.0');
 
 /**
  * The code that runs during plugin activation.

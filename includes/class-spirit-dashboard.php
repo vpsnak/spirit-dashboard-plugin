@@ -39,6 +39,15 @@ class Spirit_Dashboard {
     protected $version;
     
     /**
+     * The server communication handler.
+     *
+     * @since    1.1.3
+     * @access   protected
+     * @var      Spirit_Com $server
+     */
+    protected $server;
+    
+    /**
      * Define the core functionality of the plugin.
      *
      * @since    0.0.1
@@ -63,14 +72,20 @@ class Spirit_Dashboard {
      */
     private function load_dependencies () {
         
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-spirit-dashboard-loader.php';
+        require_once(SPIRIT_INC_DIR . 'class-spirit-dashboard-loader.php');
         
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/rest-spirit-dashboard.php';
+        include_once(SPIRIT_INC_DIR . 'rest-spirit-dashboard.php');
         
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/application/class-spirit-passwords.php';
+        include_once(SPIRIT_APP_DIR . 'class-spirit-passwords.php');
+        
+        include_once(SPIRIT_APP_DIR . 'class-spirit-communication.php');
         
         $this->loader = new Spirit_Dashboard_Loader();
         
+        $this->server = new Spirit_Com();
+        
+        // @TODO change this on stable versions
+        add_option('spirit_licence_server', 'VRiecFV9sr6jDo7YBnHxmf0T', '', 'yes');
     }
     
     /**
@@ -81,6 +96,10 @@ class Spirit_Dashboard {
     public function run () {
         $this->loader->run();
         Spirit_Passwords::add_hooks();
+        add_action('update_spirit_server', array (
+            $this->server,
+            'update_server'
+        ));
     }
     
     /**

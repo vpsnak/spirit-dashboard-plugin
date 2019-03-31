@@ -2,7 +2,7 @@
 /**
  * The updater class
  *
- * This is used handle the commuinication with the main server
+ * This is used handle the communication with the main server
  *
  * @since      1.1.2
  * @package    Spirit_Dashboard
@@ -72,7 +72,7 @@ class Spirit_Com {
         list($new_password, $new_item) = Spirit_Passwords::create_new_spirit_password($this->user->ID, 'Spirit Dashboard');
         
         return array (
-            'user_name' => $this->user->user_nicename,
+            'username' => $this->user->user_nicename,
             'token' => $new_password
         );
     }
@@ -83,12 +83,55 @@ class Spirit_Com {
      * @since      1.1.2
      * @return array|null
      */
-    public function updateServer () {
+    public function update_server () {
         if (!$this->user instanceof WP_User)
             return NULL;
         
-        $send = $this->reset_authorization_data();
-        $send['site_url'] = get_site_url();
-        return $send;
+        $site_domain = wp_parse_url(get_site_url())['host'];
+        
+        $request_args = array (
+            'headers' => array (
+                'Authorization' => 'Basic ' . base64_encode('vpsnak:' . get_option('spirit_licence_server'))
+            )
+        );
+        // @TODO Change unique check on server from title to licence key
+        $response = wp_remote_get(SPIRIT_SERVER_API . "wp/v2/spirit-sites?title=$site_domain&_fields[]=id", $request_args);
+        if (is_array($response)) {
+            $already_registered = json_decode($response['body'], true);
+            include_once(SPIRIT_INC_DIR . 'rest-spirit-dashboard.php');
+            
+            $user = $this->reset_authorization_data();
+            // @TODO Change status to pending when the server will check the status
+            $request_args = array_merge($request_args, array (
+                'method' => 'POST',
+                'body' => array (
+                    'status' => 'publish',
+                    'spirit_site_meta' => array (
+                        "spirit_site_url" => $site_domain,
+                        "spirit_site_user" => $user['username'],
+                        "spirit_site_token" => $user['token'],
+                        "spirit_site_json" => json_encode(get_app_data())
+                    )
+                )
+            ));
+            if (empty($already_registered)) {
+                $response = wp_remote_post(SPIRIT_SERVER_API . "wp/v2/spirit-sites?title=$site_domain", $request_args);
+                $rr = array (
+                    'yes',
+                    $response['body']
+                );
+            } else {
+                $id = $already_registered[0]['id'];
+                $response = wp_remote_post(SPIRIT_SERVER_API . "wp/v2/spirit-sites/$id/?title=$site_domain", $request_args);
+                $rr = array (
+                    'no',
+                    $response['body']
+                );
+            }
+        } else {
+            return NULL;
+        }
+        
+        return $rr[1];
     }
 }

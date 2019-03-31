@@ -131,27 +131,27 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      * @return mixed
      */
     private function load_plugins_data () {
-        $data_response['plugins']['count'] = count($this->all_plugins);
-        $data_response['plugins']['update']['plugins'] = array ();
+        $data_response['count'] = count($this->all_plugins);
+        $data_response['update']['plugins'] = array ();
         
         if ($this->plugin_updates) {
-            $data_response['plugins']['update']['count'] = count($this->plugin_updates);
+            $data_response['update']['count'] = count($this->plugin_updates);
             foreach ($this->plugin_updates as $key => $plugin) {
-                $data_response['plugins']['update']['plugins'][$key] = $this->load_plugin_data($key, $plugin);
+                $data_response['update']['plugins'][$key] = $this->load_plugin_data($key, $plugin);
             }
         } else {
-            $data_response['plugins']['update']['count'] = 0;
+            $data_response['update']['count'] = 0;
         }
         
-        $data_response['plugins']['no_update']['plugins'] = array ();
+        $data_response['no_update']['plugins'] = array ();
         
         if ($this->plugin_no_updates) {
-            $data_response['plugins']['no_update']['count'] = count($this->plugin_no_updates);
+            $data_response['no_update']['count'] = count($this->plugin_no_updates);
             foreach ($this->plugin_no_updates as $key => $plugin) {
-                $data_response['plugins']['no_update']['plugins'][$key] = $this->load_plugin_data($key, $plugin);
+                $data_response['no_update']['plugins'][$key] = $this->load_plugin_data($key, $plugin);
             }
         } else {
-            $data_response['plugins']['no_update']['count'] = 0;
+            $data_response['no_update']['count'] = 0;
         }
         
         return $data_response;
@@ -189,7 +189,7 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
             'name' => $this->all_plugins[$key]['Name'],
             'url' => $plugin->url,
             'slug' => $key,
-            'icons' => $plugin->icons,
+            'icons' => isset($plugin->icons) ? $plugin->icons : '',
             'plugin_uri' => $this->all_plugins[$key]['PluginURI'],
             'author' => $this->all_plugins[$key]['Author'],
             'author_uri' => $this->all_plugins[$key]['AuthorURI'],
@@ -279,7 +279,7 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
         if (empty($plugin_to_update))
             return new WP_Error('update-fail', __('No plugin updates or plugin is missing', 'spirit-dashboard'), array ('status' => 404));
         
-        include_once(__DIR__ . '/class-spirit-updater.php');
+        include_once('class-spirit-updater.php');
         
         $upgrader = new Spirit_Updater();
         $result = $upgrader->update('plugin', $this->plugin_updates[$plugin_slug]);

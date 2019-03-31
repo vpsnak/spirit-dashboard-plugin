@@ -1,7 +1,7 @@
 <?php
 // Load the parent class if it doesn't exist.
 if (!class_exists('WP_List_Table')) {
-    require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
+    include_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 }
 
 /**

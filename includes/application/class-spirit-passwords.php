@@ -435,7 +435,7 @@ class Spirit_Passwords {
 			</div>
 			<div class="spirit-passwords-list-table-wrapper">
                 <?php
-                include_once(__DIR__ . '/class-spirit-passwords-list-table.php');
+                include_once('class-spirit-passwords-list-table.php');
                 $spirit_passwords_list_table = new Spirit_Passwords_List_Table();
                 $spirit_passwords_list_table->items = array_reverse(self::get_user_spirit_passwords($user->ID));
                 $spirit_passwords_list_table->prepare_items();
@@ -499,6 +499,8 @@ class Spirit_Passwords {
 //
 //        $com = new Spirit_Com();
 //        var_dump($com->updateServer());
+		include_once SPIRIT_INC_DIR . 'rest-spirit-dashboard.php';
+		var_dump(get_app_data());
     }
     
     /**

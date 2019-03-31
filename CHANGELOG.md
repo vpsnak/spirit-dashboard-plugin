@@ -1,5 +1,15 @@
 ### [All Versions](https://github.com/vpsnak/spirit-dashboard-plugin/releases)
 
+## 1.1.3
+###### *Apr 1, 2019*
+
+#### Changes
+- [Tweak] Communication data transfer to server
+- [New] Cron to push data to the licence server (activation / deactivation)
+- [Bug | Api] Plugin route was returning plugin object inside of plugin object
+- [Tweac] Cleanup code and includes
+- [New] Plugin path defines to keep code cleaner
+
 ## 1.1.2
 ###### *Mar 31, 2019*
 

@@ -15,6 +15,12 @@ Here is a short description of the plugin.  This should be no more than 150 char
 This plugin is used to add endpoints for listing and updating Wordpress core, plugins, themes, translations.
 This plugin only supports WordPress >= 4.4.
 
+The new routes available will be:
+
+* `/spirit-dashboard/v2/app` list data for Wordpress core, plugins and themes.
+* `/spirit-dashboard/v2/plugin` list data for Wordpress plugins
+* `/spirit-dashboard/v2/plugin/<plugin_slug>` list / update Wordpress plugin (GET / POST)
+
 == Installation ==
 
 1. Get a zip of the plugin from https://github.com/vpsnak/spirit-dashboard-plugin/releases/latest

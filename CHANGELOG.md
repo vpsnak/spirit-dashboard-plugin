@@ -1,5 +1,18 @@
 ### [All Versions](https://github.com/vpsnak/spirit-dashboard-plugin/releases)
 
+## 1.1.1
+###### *Mar 31, 2019*
+
+Here are some highlights:
+- Revokable authentication tokens for users (thanks to [georgestephanis/application-passwords](https://github.com/georgestephanis/application-passwords)).
+- Basic authentication to access private endpoints (thanks to [WP-API/Basic-Auth](https://github.com/WP-API/Basic-Auth)).
+- Required authentication for all REST endpoints (thanks to [Disable WP REST API](https://wordpress.org/plugins/disable-wp-rest-api/)).
+
+#### Changes
+- [Tweak] Changed readme and changelog file to test how the plugin will parse them
+- [New | Api] Integration of application passwords to authenticate without sending user passwords
+- [Tweak] Required authentication for all REST endpoints
+
 ## 1.1.0
 ###### *Mar 30, 2019*
 

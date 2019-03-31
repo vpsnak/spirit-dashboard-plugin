@@ -1,5 +1,12 @@
 ### [All Versions](https://github.com/vpsnak/spirit-dashboard-plugin/releases)
 
+## 1.1.2
+###### *Mar 31, 2019*
+
+#### Changes
+- [New] Communication skeleton to update licence server
+- [Bug | Api] Check if plugin is installed before fetch his data for the api
+
 ## 1.1.1
 ###### *Mar 31, 2019*
 

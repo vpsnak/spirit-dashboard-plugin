@@ -158,7 +158,19 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
     }
     
     /**
-     * Parse anbd merge plugin info with meta data.
+     * Check if plugin is installed.
+     *
+     * @since      1.1.2
+     *
+     * @param $key
+     * @return bool
+     */
+    public function is_plugin_installed ($key) {
+        return array_key_exists($key, $this->all_plugins);
+    }
+    
+    /**
+     * Parse and merge plugin info with meta data.
      *
      * @since      1.1.0
      *
@@ -168,6 +180,9 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      */
     private function load_plugin_data ($key, $plugin) {
         if (!$key || !$plugin)
+            return [];
+        
+        if (!$this->is_plugin_installed($key))
             return [];
         
         return array (
@@ -203,6 +218,9 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      * @return array
      */
     public function get_plugin_data ($key) {
+        if (!$this->is_plugin_installed($key))
+            return [];
+        
         if (array_key_exists($key, $this->plugins_data['plugins']['update']['plugins']))
             return $this->plugins_data['plugins']['update']['plugins'][$key];
         

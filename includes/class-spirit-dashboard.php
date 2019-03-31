@@ -3,12 +3,6 @@
 /**
  * The core plugin class.
  *
- * This is used to define internationalization, admin-specific hooks, and
- * public-facing site hooks.
- *
- * Also maintains the unique identifier of this plugin as well as the current
- * version of the plugin.
- *
  * @since      0.0.1
  * @package    Spirit_Dashboard
  * @subpackage Spirit_Dashboard/includes
@@ -47,10 +41,6 @@ class Spirit_Dashboard {
     /**
      * Define the core functionality of the plugin.
      *
-     * Set the plugin name and the plugin version that can be used throughout the plugin.
-     * Load the dependencies, define the locale, and set the hooks for the admin area and
-     * the public-facing side of the site.
-     *
      * @since    0.0.1
      */
     public function __construct () {
@@ -68,25 +58,11 @@ class Spirit_Dashboard {
     /**
      * Load the required dependencies for this plugin.
      *
-     * Include the following files that make up the plugin:
-     *
-     * - Spirit_Dashboard_Loader. Orchestrates the hooks of the plugin.
-     * - Spirit_Dashboard_i18n. Defines internationalization functionality.
-     * - Spirit_Dashboard_Admin. Defines all hooks for the admin area.
-     * - Spirit_Dashboard_Public. Defines all hooks for the public side of the site.
-     *
-     * Create an instance of the loader which will be used to register the hooks
-     * with WordPress.
-     *
      * @since    0.0.1
      * @access   private
      */
     private function load_dependencies () {
         
-        /**
-         * The class responsible for orchestrating the actions and filters of the
-         * core plugin.
-         */
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-spirit-dashboard-loader.php';
         
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/rest-spirit-dashboard.php';
@@ -98,7 +74,7 @@ class Spirit_Dashboard {
     }
     
     /**
-     * Run the loader to execute all of the hooks with WordPress.
+     * The init of the plugin.
      *
      * @since    0.0.1
      */

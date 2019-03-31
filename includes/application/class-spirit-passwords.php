@@ -494,6 +494,11 @@ class Spirit_Passwords {
 			<div class="notice notice-{{ data.type }}"><p>{{{ data.message }}}</p></div>
 		</script>
         <?php
+//        require_once 'class-spirit-communication.php';
+//
+//
+//        $com = new Spirit_Com();
+//        var_dump($com->updateServer());
     }
     
     /**

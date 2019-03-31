@@ -1,6 +1,6 @@
 ### [All Versions](https://github.com/vpsnak/spirit-dashboard-plugin/releases)
 
-## 1.1.3
+## 1.1.4
 ###### *Apr 1, 2019*
 
 #### Changes
@@ -9,6 +9,7 @@
 - [Bug | Api] Plugin route was returning plugin object inside of plugin object
 - [Tweac] Cleanup code and includes
 - [New] Plugin path defines to keep code cleaner
+- [Bug] Server registration had wrong search query
 
 ## 1.1.2
 ###### *Mar 31, 2019*

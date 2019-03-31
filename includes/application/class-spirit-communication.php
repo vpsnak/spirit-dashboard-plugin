@@ -95,7 +95,7 @@ class Spirit_Com {
             )
         );
         // @TODO Change unique check on server from title to licence key
-        $response = wp_remote_get(SPIRIT_SERVER_API . "wp/v2/spirit-sites?title=$site_domain&_fields[]=id", $request_args);
+        $response = wp_remote_get(SPIRIT_SERVER_API . "wp/v2/spirit-sites?search=$site_domain&_fields[]=id", $request_args);
         if (is_array($response)) {
             $already_registered = json_decode($response['body'], true);
             include_once(SPIRIT_INC_DIR . 'rest-spirit-dashboard.php');

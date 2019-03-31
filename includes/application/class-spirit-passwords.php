@@ -499,8 +499,8 @@ class Spirit_Passwords {
 //
 //        $com = new Spirit_Com();
 //        var_dump($com->updateServer());
-		include_once SPIRIT_INC_DIR . 'rest-spirit-dashboard.php';
-		var_dump(get_app_data());
+//		include_once SPIRIT_INC_DIR . 'rest-spirit-dashboard.php';
+//		var_dump(get_app_data());
     }
     
     /**

@@ -65,26 +65,25 @@ class Spirit_Passwords {
         */
         remove_action('wp_head', 'rest_output_link_wp_head', 10);
         remove_action('xmlrpc_rsd_apis', 'rest_output_rsd');
-        
-        if (version_compare(get_bloginfo('version'), '4.7', '>=')) {
-            
-            add_filter('rest_authentication_errors', function($access) {
-                if (!is_user_logged_in()) {
-                    $message = apply_filters('disable_wp_rest_api_error', __('REST API restricted to authenticated users.', 'disable-wp-rest-api'));
-                    return new WP_Error('rest_login_required', $message, array ('status' => rest_authorization_required_code()));
-                }
-                return $access;
-            });
-        } else {
-            // REST API 1.x
-            add_filter('json_enabled', '__return_false');
-            add_filter('json_jsonp_enabled', '__return_false');
-            
-            // REST API 2.x
-            add_filter('rest_enabled', '__return_false');
-            add_filter('rest_jsonp_enabled', '__return_false');
-        }
-        
+
+//        if (version_compare(get_bloginfo('version'), '4.7', '>=')) {
+//
+//            add_filter('rest_authentication_errors', function($access) {
+//                if (!is_user_logged_in()) {
+//                    return new WP_Error('rest_login_required', json_encode($access).'REST API restricted to authenticated users.', array ('status' => rest_authorization_required_code()));
+//                }
+//                return $access;
+//            });
+//        } else {
+//            // REST API 1.x
+//            add_filter('json_enabled', '__return_false');
+//            add_filter('json_jsonp_enabled', '__return_false');
+//
+//            // REST API 2.x
+//            add_filter('rest_enabled', '__return_false');
+//            add_filter('rest_jsonp_enabled', '__return_false');
+//        }
+
         self::fallback_populate_username_password();
     }
     

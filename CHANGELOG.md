@@ -1,15 +1,16 @@
 ### [All Versions](https://github.com/vpsnak/spirit-dashboard-plugin/releases)
 
-## 1.1.4
+## 1.1.5
 ###### *Apr 1, 2019*
 
 #### Changes
 - [Tweak] Communication data transfer to server
 - [New] Cron to push data to the licence server (activation / deactivation)
 - [Bug | Api] Plugin route was returning plugin object inside of plugin object
-- [Tweac] Cleanup code and includes
+- [Tweak] Cleanup code and includes
 - [New] Plugin path defines to keep code cleaner
 - [Bug] Server registration had wrong search query
+- [Bug] Enable REST API to let the react app authenticate @TODO re-disable with better wya
 
 ## 1.1.2
 ###### *Mar 31, 2019*

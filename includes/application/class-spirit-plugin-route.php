@@ -252,15 +252,15 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
         $params = $request->get_params();
         
         if (!$params['slug'])
-            return new WP_Error('argument-missing', __('Plugin slug missing', 'spirit-dashboard'), array ('status' => 404));
+            return new  WP_REST_Response('slug-missing', 404);
         
         $plugin = $this->get_plugin_data($params['slug']);
         if (empty($plugin))
-            return new WP_Error('plugin-missing', __('No plugin found', 'spirit-dashboard'), array ('status' => 404));
+            return new  WP_REST_Response($plugin, 404);
         
         return new WP_REST_Response($plugin, 200);
     }
-    
+
     /**
      * Update plugin.
      * @since      1.1.0
@@ -271,20 +271,33 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
     public function update_item ($request) {
         $params = $request->get_params();
         $plugin_slug = $params['slug'];
-        
+
         if (!$plugin_slug)
-            return new WP_Error('argument-missing', __('Plugin slug missing', 'spirit-dashboard'), array ('status' => 404));
-        
+            return new WP_REST_Response(false, 200);
+
         $plugin_to_update = $this->needs_update($plugin_slug);
         if (empty($plugin_to_update))
-            return new WP_Error('update-fail', __('No plugin updates or plugin is missing', 'spirit-dashboard'), array ('status' => 404));
-        
+            return new WP_REST_Response(false, 200);
+
         include_once('class-spirit-updater.php');
-        
+
         $upgrader = new Spirit_Updater();
         $result = $upgrader->update('plugin', $this->plugin_updates[$plugin_slug]);
-        
-        return new WP_REST_Response(array ($result), 200);
+
+        if($result){
+            delete_site_transient('update_plugins');
+            wp_update_plugins();
+
+            $this->all_plugins = get_plugins();
+            $plugin_update_transient = get_site_transient('update_plugins');
+            $this->plugin_updates = $plugin_update_transient->response;
+            $this->plugin_no_updates = $plugin_update_transient->no_update;
+
+            $this->plugins_data = $this->load_plugins_data();
+            return new WP_REST_Response($this->plugins_data, 200);
+        }
+
+        return new WP_REST_Response(false, 200);
     }
     
     /**

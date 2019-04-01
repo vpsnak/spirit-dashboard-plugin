@@ -1,23 +1,29 @@
 ### [All Versions](https://github.com/vpsnak/spirit-dashboard-plugin/releases)
 
+## 1.1.x
+###### *Apr 1, 2019*
+
+#### Changes
+- [Patch | Api] Plugin endpoint get didn't work after patching the plugin-route data key
+
 ## 1.1.5
 ###### *Apr 1, 2019*
 
 #### Changes
 - [Tweak] Communication data transfer to server
 - [New] Cron to push data to the licence server (activation / deactivation)
-- [Bug | Api] Plugin route was returning plugin object inside of plugin object
+- [Patch | Api] Plugin route was returning plugin object inside of plugin object
 - [Tweak] Cleanup code and includes
 - [New] Plugin path defines to keep code cleaner
-- [Bug] Server registration had wrong search query
-- [Bug] Enable REST API to let the react app authenticate @TODO re-disable with better way
+- [Patch] Server registration had wrong search query
+- [Patch] Enable REST API to let the react app authenticate @TODO re-disable with better way
 
 ## 1.1.2
 ###### *Mar 31, 2019*
 
 #### Changes
 - [New] Communication skeleton to update licence server
-- [Bug | Api] Check if plugin is installed before fetch his data for the api
+- [Patch | Api] Check if plugin is installed before fetch his data for the api
 
 ## 1.1.1
 ###### *Mar 31, 2019*
@@ -51,7 +57,7 @@ Here are some highlights:
 
 Here are some highlights:
 - Plugin update checker from git repo (thanks to [YahnisElsts/plugin-update-checker](https://github.com/YahnisElsts/plugin-update-checker)).
-- Bug fixes and cleanup
+- Patch fixes and cleanup
 
 #### Changes
 

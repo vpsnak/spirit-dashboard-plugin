@@ -221,11 +221,11 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
         if (!$this->is_plugin_installed($key))
             return [];
         
-        if (array_key_exists($key, $this->plugins_data['plugins']['update']['plugins']))
-            return $this->plugins_data['plugins']['update']['plugins'][$key];
+        if (array_key_exists($key, $this->plugins_data['update']['plugins']))
+            return $this->plugins_data['update']['plugins'][$key];
         
-        if (array_key_exists($key, $this->plugins_data['plugins']['no_update']['plugins']))
-            return $this->plugins_data['plugins']['no_update']['plugins'][$key];
+        if (array_key_exists($key, $this->plugins_data['no_update']['plugins']))
+            return $this->plugins_data['no_update']['plugins'][$key];
         
         return [];
     }

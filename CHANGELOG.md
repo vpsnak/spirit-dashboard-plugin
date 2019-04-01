@@ -10,7 +10,7 @@
 - [Tweak] Cleanup code and includes
 - [New] Plugin path defines to keep code cleaner
 - [Bug] Server registration had wrong search query
-- [Bug] Enable REST API to let the react app authenticate @TODO re-disable with better wya
+- [Bug] Enable REST API to let the react app authenticate @TODO re-disable with better way
 
 ## 1.1.2
 ###### *Mar 31, 2019*

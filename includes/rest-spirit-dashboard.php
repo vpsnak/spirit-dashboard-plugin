@@ -14,7 +14,7 @@
  * @author     Vaggelis Pallis <info.vpsnak@gmail.com>
  */
 
-require_once __DIR__ . '/application/class-spirit-plugin-route.php';
+include_once (__DIR__ . '/application/class-spirit-plugin-route.php');
 
 add_action('rest_api_init', function() {
     $spirit_plugin_route = new Spirit_Plugin_Route();
@@ -68,5 +68,5 @@ function get_app_data () {
         $data_response['themes']['update']['count'] = 0;
     }
     
-    return ($data_response);
+    return $data_response;
 }

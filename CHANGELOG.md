@@ -1,10 +1,21 @@
 ### [All Versions](https://github.com/vpsnak/spirit-dashboard-plugin/releases)
 
-## 1.1.x
-###### *Apr 1, 2019*
+## 1.2.0 - Plugins Endpoint Testing
+###### *Apr 3, 2019*
+
+Here are some highlights:
+- Moved activation/deactivation/uninstall in one file
+- All plugins now displayed correctly with their data
+
 
 #### Changes
-- [Patch | Api] Plugin endpoint get didn't work after patching the plugin-route data key
+- [Tweak] Changed server update interval to 1 hour for testing
+- [Tweak] Moved activation/deactivation/uninstall in main file for cleanup
+- [Fix] Some plugins were not returned in response
+- [Tweak] Changed authenticated user username to start deploying on some sites for testing.
+- [Remove] Removed activation and deactivation class (maybe add them back in the future)
+- [Tweak | Api] Replaced WP_ERROR with WP_REST_Response 200 with data []
+- [Fix | Api] Plugin endpoint get didn't work after patching the plugin-route data key (get_plugin_data)
 
 ## 1.1.5
 ###### *Apr 1, 2019*

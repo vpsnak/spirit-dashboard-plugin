@@ -64,9 +64,7 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      * @since      1.1.0
      */
     public function __construct () {
-        if (!function_exists('get_plugins')) {
-            include_once(ABSPATH . 'wp-admin/includes/plugin.php');
-        }
+        include_once(ABSPATH . 'wp-admin/includes/plugin.php');
         
         $this->all_plugins = get_plugins();
         $plugin_update_transient = get_site_transient('update_plugins');
@@ -131,27 +129,40 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      * @return mixed
      */
     private function load_plugins_data () {
+        $pluginIterator = $this->all_plugins;
+        
         $data_response['count'] = count($this->all_plugins);
         $data_response['update']['plugins'] = array ();
+        $data_response['update']['count'] = 0;
         
         if ($this->plugin_updates) {
             $data_response['update']['count'] = count($this->plugin_updates);
             foreach ($this->plugin_updates as $key => $plugin) {
                 $data_response['update']['plugins'][$key] = $this->load_plugin_data($key, $plugin);
+                if (array_key_exists($key, $pluginIterator)) {
+                    unset($pluginIterator[$key]);
+                }
             }
-        } else {
-            $data_response['update']['count'] = 0;
         }
         
         $data_response['no_update']['plugins'] = array ();
+        $data_response['no_update']['count'] = 0;
         
         if ($this->plugin_no_updates) {
             $data_response['no_update']['count'] = count($this->plugin_no_updates);
             foreach ($this->plugin_no_updates as $key => $plugin) {
                 $data_response['no_update']['plugins'][$key] = $this->load_plugin_data($key, $plugin);
+                if (array_key_exists($key, $pluginIterator)) {
+                    unset($pluginIterator[$key]);
+                }
             }
-        } else {
-            $data_response['no_update']['count'] = 0;
+        }
+        
+        if ($pluginIterator) {
+            $data_response['no_update']['count'] += count($pluginIterator);
+            foreach ($pluginIterator as $key => $plugin) {
+                $data_response['no_update']['plugins'][$key] = $this->load_plugin_data($key, $plugin);
+            }
         }
         
         return $data_response;
@@ -187,14 +198,18 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
         
         return array (
             'name' => $this->all_plugins[$key]['Name'],
-            'url' => $plugin->url,
+            'url' => isset($plugin->url) ? $plugin->url : $this->all_plugins[$key]['PluginURI'],
             'slug' => $key,
-            'icons' => isset($plugin->icons) ? $plugin->icons : '',
+            'active' => is_plugin_active($key),
+            'icons' => isset($plugin->icons) ? $plugin->icons : [],
             'plugin_uri' => $this->all_plugins[$key]['PluginURI'],
             'author' => $this->all_plugins[$key]['Author'],
             'author_uri' => $this->all_plugins[$key]['AuthorURI'],
             'current_version' => $this->all_plugins[$key]['Version'],
-            'latest_version' => $plugin->new_version,
+            'latest_version' => isset($plugin->new_version) ? $plugin->new_version : $this->all_plugins[$key]['Version'],
+            'tested' => isset($plugin->tested) ? $plugin->tested : [],
+            'requires_php' => isset($plugin->requires_php) ? $plugin->requires_php : [],
+            'compatibility' => isset($plugin->compatibility) ? $plugin->compatibility : []
         );
     }
     
@@ -246,57 +261,57 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      * @since      1.1.0
      *
      * @param WP_REST_Request $request
-     * @return WP_Error|WP_REST_Response
+     * @return WP_REST_Response
      */
     public function get_item ($request) {
         $params = $request->get_params();
         
         if (!$params['slug'])
-            return new  WP_REST_Response('slug-missing', 404);
+            return new WP_REST_Response(false, 200);
         
         $plugin = $this->get_plugin_data($params['slug']);
         if (empty($plugin))
-            return new  WP_REST_Response($plugin, 404);
+            return new WP_REST_Response(false, 200);
         
         return new WP_REST_Response($plugin, 200);
     }
-
+    
     /**
      * Update plugin.
      * @since      1.1.0
      *
      * @param WP_REST_Request $request
-     * @return WP_Error|WP_REST_Response
+     * @return WP_REST_Response
      */
     public function update_item ($request) {
         $params = $request->get_params();
         $plugin_slug = $params['slug'];
-
+        
         if (!$plugin_slug)
             return new WP_REST_Response(false, 200);
-
+        
         $plugin_to_update = $this->needs_update($plugin_slug);
         if (empty($plugin_to_update))
             return new WP_REST_Response(false, 200);
-
+        
         include_once('class-spirit-updater.php');
-
+        
         $upgrader = new Spirit_Updater();
         $result = $upgrader->update('plugin', $this->plugin_updates[$plugin_slug]);
-
-        if($result){
+        
+        if ($result) {
             delete_site_transient('update_plugins');
             wp_update_plugins();
-
+            
             $this->all_plugins = get_plugins();
             $plugin_update_transient = get_site_transient('update_plugins');
             $this->plugin_updates = $plugin_update_transient->response;
             $this->plugin_no_updates = $plugin_update_transient->no_update;
-
+            
             $this->plugins_data = $this->load_plugins_data();
             return new WP_REST_Response($this->plugins_data, 200);
         }
-
+        
         return new WP_REST_Response(false, 200);
     }
     

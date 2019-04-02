@@ -38,7 +38,7 @@ class Spirit_Com {
         if (!function_exists('get_user_by'))
             include_once(ABSPATH . 'wp-includes/pluggable.php');
         
-        $user_name = 'spiritdashboard';
+        $user_name = 'SpiritDashboard';
         $user_email = 'support@vpsnak.com';
         $user_id = username_exists($user_name);
         if (!$user_id && email_exists($user_email) == false) {

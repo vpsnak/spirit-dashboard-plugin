@@ -72,7 +72,7 @@ class Spirit_Dashboard {
      */
     private function load_dependencies () {
         
-        require_once(SPIRIT_INC_DIR . 'class-spirit-dashboard-loader.php');
+        include_once(SPIRIT_INC_DIR . 'class-spirit-dashboard-loader.php');
         
         include_once(SPIRIT_INC_DIR . 'rest-spirit-dashboard.php');
         

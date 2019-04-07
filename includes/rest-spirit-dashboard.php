@@ -39,7 +39,12 @@ function get_app_data () {
         'url' => get_bloginfo('url'),
         'logo' => wp_get_attachment_image_src($custom_logo_id, 'full')[0] ? : [],
     );
+    
     $update_core = get_site_transient('update_core');
+    if(!$update_core)
+        wp_version_check();
+    $update_core = get_site_transient('update_core');
+    
     $data_response['wordpress'] = array (
         'current_version' => $update_core->updates[0]->current,
         'latest_version' => $update_core->updates[0]->version,

@@ -91,7 +91,7 @@ class Spirit_Com {
         
         $request_args = array (
             'headers' => array (
-                'Authorization' => 'Basic ' . base64_encode('vpsnak:' . get_option('spirit_licence_server'))
+                'Authorization' => 'Bearer ' . get_option('spirit_licence_server')
             )
         );
         // @TODO Change unique check on server from title to licence key

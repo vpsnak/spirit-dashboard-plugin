@@ -85,7 +85,11 @@ class Spirit_Dashboard {
         $this->server = new Spirit_Com();
         
         // @TODO change this on stable versions
-        add_option('spirit_licence_server', 'VRiecFV9sr6jDo7YBnHxmf0T', '', 'yes');
+        if (get_option('spirit_licence_server')) {
+            update_option('spirit_licence_server', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvdnBzbmFrLmNvbSIsImlhdCI6MTU1NDYyODUyMSwibmJmIjoxNTU0NjI4NTIxLCJleHAiOjE1NTUyMzMzMjEsImRhdGEiOnsidXNlciI6eyJpZCI6IjQifX19.sZyyVaCZWZ09XxIJ7i6V2Z9LqQ09DG4N___LNC5k3IQ');
+        } else {
+            add_option('spirit_licence_server', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvdnBzbmFrLmNvbSIsImlhdCI6MTU1NDYyODUyMSwibmJmIjoxNTU0NjI4NTIxLCJleHAiOjE1NTUyMzMzMjEsImRhdGEiOnsidXNlciI6eyJpZCI6IjQifX19.sZyyVaCZWZ09XxIJ7i6V2Z9LqQ09DG4N___LNC5k3IQ', '', 'yes');
+        }
     }
     
     /**

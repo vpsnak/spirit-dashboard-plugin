@@ -309,7 +309,7 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
             $this->plugin_no_updates = $plugin_update_transient->no_update;
             
             $this->plugins_data = $this->load_plugins_data();
-            return new WP_REST_Response($this->plugins_data, 200);
+            return new WP_REST_Response(true, 200);
         }
         
         return new WP_REST_Response(false, 200);

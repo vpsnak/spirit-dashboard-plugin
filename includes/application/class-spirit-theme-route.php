@@ -287,7 +287,7 @@ class Spirit_Theme_Route extends WP_REST_Controller {
         include_once('class-spirit-updater.php');
         
         $upgrader = new Spirit_Updater();
-        $result = $upgrader->update('theme', $this->theme_updates[$theme_slug]);
+        $result = $upgrader->update('theme', (object)$this->theme_updates[$theme_slug]);
         
         if ($result) {
             delete_site_transient('update_themes');

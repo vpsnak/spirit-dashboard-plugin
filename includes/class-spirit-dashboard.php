@@ -104,6 +104,8 @@ class Spirit_Dashboard {
             $this->server,
             'update_server'
         ));
+    
+        include_once(SPIRIT_ADMIN_DIR . 'register-spirit-pages.php');
     }
     
     /**

@@ -37,6 +37,7 @@ define('SPIRIT_DASHBOARD_BASE_URL', plugin_dir_url(__FILE__));
 define('SPIRIT_BASE_DIR', __DIR__);
 define('SPIRIT_INC_DIR', __DIR__ . '/includes/');
 define('SPIRIT_APP_DIR', __DIR__ . '/includes/application/');
+define('SPIRIT_ADMIN_DIR', __DIR__ . '/includes/admin/');
 define('SPIRIT_SERVER_API', 'https://vpsnak.com/wp-json/');
 
 /**

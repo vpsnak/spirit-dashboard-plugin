@@ -2,7 +2,7 @@
 /**
  * The user class that handles roles and capabilities
  *
- * @since      1.2.4
+ * @since      1.2.3
  * @package    Spirit_Dashboard
  * @subpackage Spirit_Dashboard/includes/application
  * @author     Vaggelis Pallis <info.vpsnak@gmail.com>
@@ -11,58 +11,81 @@
 class Spirit_Pages {
     /**
      * Settings array
+     *
+     * @since      1.2.3
      * @var array
      */
     public $settings = array ();
     
     /**
      * Sections array
+     *
+     * @since      1.2.3
      * @var array
      */
     public $sections = array ();
     
     /**
      * Fields array
+     *
+     * @since      1.2.3
      * @var array
      */
     public $fields = array ();
     
     /**
      * Script path
+     *
+     * @since      1.2.3
      * @var string
      */
     public $script_path;
     
     /**
      * Enqueues array
+     *
+     * @since      1.2.3
      * @var array
      */
     public $enqueues = array ();
     
     /**
      * Admin pages array to enqueue scripts
+     *
+     * @since      1.2.3
      * @var array
      */
     public $enqueue_on_pages = array ();
     
     /**
      * Admin pages array
+     *
+     * @since      1.2.3
      * @var array
      */
     public $admin_pages = array ();
     
     /**
      * Admin subpages array
+     *
+     * @since      1.2.3
      * @var array
      */
     public $admin_subpages = array ();
     
     /**
      * Constructor
+     *
+     * @since      1.2.3
      */
     public function __construct () {
     }
     
+    /**
+     * Register pages, scripts and options
+     *
+     * @since      1.2.3
+     */
     public function register () {
         if (!empty($this->enqueues))
             add_action('admin_enqueue_scripts', array (
@@ -86,6 +109,7 @@ class Spirit_Pages {
     /**
      * Dinamically enqueue styles and scripts in admin area
      *
+     * @since      1.2.3
      * @param  array $scripts file paths or wp related keywords of embedded files
      * @param  array $pages pages id where to load scripts
      * @return $this
@@ -112,6 +136,7 @@ class Spirit_Pages {
     /**
      * Call the right WP functions based on the file or string passed
      *
+     * @since      1.2.3
      * @param  array $script file path or wp related keyword of embedded file
      * @param  var $type style | script
      * @return array|string functions
@@ -126,6 +151,7 @@ class Spirit_Pages {
     /**
      * Print the methods to be called by the admin_enqueue_scripts hook
      *
+     * @since      1.2.3
      * @param $hook page id or filename passed by admin_enqueue_scripts
      */
     public function admin_scripts ($hook) {
@@ -148,7 +174,9 @@ class Spirit_Pages {
     /**
      * Injects user's defined pages array into $admin_pages array
      *
+     * @since      1.2.3
      * @param $pages array of user's defined pages
+     * @return $this
      */
     public function addPages ($pages) {
         $this->admin_pages = $pages;
@@ -182,6 +210,7 @@ class Spirit_Pages {
     /**
      * Injects user's defined pages array into $admin_subpages array
      *
+     * @since      1.2.3
      * @param $pages array of user's defined pages
      * @return $this
      */
@@ -193,6 +222,8 @@ class Spirit_Pages {
     
     /**
      * Call WordPress methods to generate Admin pages and subpages
+     *
+     * @since      1.2.3
      */
     public function add_admin_menu () {
         foreach ($this->admin_pages as $page) {
@@ -207,6 +238,7 @@ class Spirit_Pages {
     /**
      * Injects user's defined settings array into $settings array
      *
+     * @since      1.2.3
      * @param  $args array of user's defined settings
      * @return $this
      */
@@ -219,6 +251,7 @@ class Spirit_Pages {
     /**
      * Injects user's defined sections array into $sections array
      *
+     * @since      1.2.3
      * @param $args array of user's defined sections
      * @return $this
      */
@@ -242,6 +275,8 @@ class Spirit_Pages {
     
     /**
      * Call WordPress methods to register settings, sections, and fields
+     *
+     * @since      1.2.3
      */
     public function register_custom_settings () {
         foreach ($this->settings as $setting) {

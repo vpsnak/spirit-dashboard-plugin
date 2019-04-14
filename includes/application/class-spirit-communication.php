@@ -91,7 +91,7 @@ class Spirit_Com {
         
         $request_args = array (
             'headers' => array (
-                'Authorization' => 'Bearer ' . get_option('spirit_licence_server')
+                'Authorization' => 'Bearer ' . $this->get_token()
             )
         );
         // @TODO Change unique check on server from title to licence key
@@ -133,5 +133,77 @@ class Spirit_Com {
         }
         
         return $rr[1];
+    }
+    
+    /**
+     * Request auth token from server
+     *
+     * @since      1.2.3
+     * @return array|null|WP_Error
+     */
+    private function request_token () {
+        $args = array (
+            'method' => 'POST',
+            'body' => array (
+                'username' => get_option('sd-username'),
+                'password' => get_option('sd-password')
+            )
+        );
+        
+        $get_token = wp_remote_post(SPIRIT_SERVER_API . "jwt-auth/v1/token", $args);
+        if (is_wp_error($get_token))
+            return NULL;
+        
+        return $get_token;
+    }
+    
+    /**
+     * Validate auth token
+     *
+     * @since      1.2.3
+     * @return array|null|WP_Error
+     */
+    private function validate_token () {
+        $args = array (
+            'method' => 'POST',
+            'headers' => array (
+                'Authorization' => 'Bearer ' . get_option('spirit_licence_server')
+            )
+        );
+        
+        $get_token = wp_remote_post(SPIRIT_SERVER_API . "jwt-auth/v1/token/validate", $args);
+        if (is_wp_error($get_token))
+            return NULL;
+        
+        return $get_token;
+    }
+    
+    /**
+     * Check and retrieve auth token from api calls
+     *
+     * @since      1.2.3
+     * @return mixed
+     */
+    public function get_token () {
+        if (!get_option('spirit_licence_server')) {
+            add_option('spirit_licence_server', '', '', 'yes');
+        }
+        //        else {
+        //            update_option('spirit_licence_server', 'hard-coded-token');
+        //        }
+        
+        $token = get_option('spirit_licence_server');
+        $validate_token = $this->validate_token();
+        $response = json_decode($validate_token['body'], true);
+        if (!isset($response['data']) || !isset($response['data']['status']) || $response['data']['status'] != 200) {
+            $request_token = $this->request_token();
+            $response = json_decode($request_token['body'], true);
+            if (isset($response['token'])) {
+                $token = $response['token'];
+                update_option('spirit_licence_server', $token);
+            }
+        }
+        
+        return $token;
     }
 }

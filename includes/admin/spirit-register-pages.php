@@ -20,6 +20,14 @@ $settingsApi->addPages($pages)->withSubPage();
 $subpages = array (
         array (
             'parent_slug' => 'spirit-dashboard',
+            'page_title' => 'Debug',
+            'menu_title' => 'Debug',
+            'capability' => 'manage_options',
+            'menu_slug' => 'spirit-dashboard-send-data',
+            'callback' => 'spirit_dashboard_send_data'
+        ),
+        array (
+            'parent_slug' => 'spirit-dashboard',
             'page_title' => 'Settings',
             'menu_title' => 'Settings',
             'capability' => 'manage_options',
@@ -83,7 +91,7 @@ $fields = array (
     array (
         'id' => $sd_option['password'],
         'title' => 'Password',
-        'callback' => 'sd_textbox',
+        'callback' => 'sd_password',
         'page' => $sd_page['settings']['page'],
         'section' => $sd_page['settings']['section'],
         'args' => array (

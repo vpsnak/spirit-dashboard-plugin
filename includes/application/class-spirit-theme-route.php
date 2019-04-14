@@ -48,7 +48,7 @@ class Spirit_Theme_Route extends WP_REST_Controller {
      * @since      1.2.2
      * @var array
      */
-    protected $themes_data;
+    protected $themes_data = NULL;
     
     /**
      * Spirit_Theme_Route constructor.
@@ -56,6 +56,14 @@ class Spirit_Theme_Route extends WP_REST_Controller {
      * @since      1.2.2
      */
     public function __construct () {
+    }
+    
+    /**
+     * Load route data
+     *
+     * @since      1.2.3
+     */
+    public function load_data () {
         include_once(ABSPATH . 'wp-admin/includes/theme.php');
         
         $theme_update_transient = get_site_transient('update_themes');
@@ -212,6 +220,9 @@ class Spirit_Theme_Route extends WP_REST_Controller {
      * @return array|mixed
      */
     public function get_themes_data () {
+        if (!$this->themes_data)
+            $this->load_data();
+        
         return $this->themes_data;
     }
     

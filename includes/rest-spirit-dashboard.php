@@ -20,17 +20,17 @@ include_once(__DIR__ . '/application/class-spirit-debug-route.php');
 
 add_action('rest_api_init', function() {
     $spirit_plugin_route = new Spirit_Plugin_Route();
-    $spirit_plugin_route->register_routes();
     $spirit_theme_route = new Spirit_Theme_Route();
-    $spirit_theme_route->register_routes();
     $spirit_debug_route = new Spirit_Debug_Route();
+    $spirit_plugin_route->register_routes();
+    $spirit_theme_route->register_routes();
     $spirit_debug_route->register_routes();
     
     register_rest_route('spirit-dashboard/v2', '/app', array (
         'methods' => 'GET',
         'callback' => 'get_app_data',
         'permission_callback' => function() {
-            return current_user_can('manage_options');
+            return current_user_can('manage_options') || current_user_can('can_see_sites');
         }
     ));
     register_rest_route('spirit-dashboard/v2', '/dev', array (
@@ -46,13 +46,12 @@ add_action('rest_api_init', function() {
 function get_app_dev () {
     $arr = array ();
     $debug_api = new Spirit_Debug_Route();
-    $arr['size'] = $debug_api->get_size_info();
+    $arr['size'] = $debug_api->get_installation_data();
     
     return $arr;
 }
 
 function get_app_data () {
-    global $wpdb;
     $plugin_api = new Spirit_Plugin_Route();
     $theme_api = new Spirit_Theme_Route();
     $debug_api = new Spirit_Debug_Route();
@@ -70,7 +69,7 @@ function get_app_data () {
     
     $data_response['wordpress'] = $debug_api->get_wordpress_data();
     $data_response['wordpress']['server'] = $debug_api->get_server_data();
-    $data_response['wordpress']['installation'] = $debug_api->get_size_info();
+    $data_response['wordpress']['installation'] = $debug_api->get_installation_data();
     
     $data_response['wordpress']['current_version'] = $update_core->updates[0]->current;
     $data_response['wordpress']['latest_version'] = $update_core->updates[0]->version;

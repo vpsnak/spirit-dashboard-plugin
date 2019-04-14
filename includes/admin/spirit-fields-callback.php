@@ -7,7 +7,13 @@ function sd_label ($args) {
 
 function sd_textbox ($args) {
     ?>
-    <input type="text" name="<?= $args['label_for'] ?>" id="<?= $args['label_for'] ?>" value="<?php echo get_option($args['label_for']); ?>" />
+	<input type="text" name="<?= $args['label_for'] ?>" id="<?= $args['label_for'] ?>" value="<?php echo get_option($args['label_for']); ?>" />
+    <?php
+}
+
+function sd_password ($args) {
+    ?>
+	<input type="password" name="<?= $args['label_for'] ?>" id="<?= $args['label_for'] ?>" value="<?php echo get_option($args['label_for']); ?>" />
     <?php
 }
 

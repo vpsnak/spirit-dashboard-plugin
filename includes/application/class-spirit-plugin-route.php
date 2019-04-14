@@ -56,7 +56,7 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      * @since      1.1.0
      * @var array
      */
-    protected $plugins_data;
+    protected $plugins_data = NULL;
     
     /**
      * Spirit_Plugin_Route constructor.
@@ -64,6 +64,14 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      * @since      1.1.0
      */
     public function __construct () {
+    }
+    
+    /**
+     * Load route data
+     *
+     * @since      1.2.3
+     */
+    public function load_data () {
         include_once(ABSPATH . 'wp-admin/includes/plugin.php');
         
         $this->all_plugins = get_plugins();
@@ -222,6 +230,9 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      * @return array|mixed
      */
     public function get_plugins_data () {
+        if (!$this->plugins_data)
+            $this->load_data();
+        
         return $this->plugins_data;
     }
     

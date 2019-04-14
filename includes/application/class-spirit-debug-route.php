@@ -27,12 +27,12 @@ class Spirit_Debug_Route extends WP_REST_Controller {
     protected $rest_base = 'debug';
     
     /**
-     * Parsed data of servers.
+     * Parsed data of wordpress.
      *
      * @since      1.2.3
      * @var array
      */
-    protected $wordpress_data;
+    protected $wordpress_data = NULL;
     
     /**
      * Parsed data of servers.
@@ -40,7 +40,15 @@ class Spirit_Debug_Route extends WP_REST_Controller {
      * @since      1.2.3
      * @var array
      */
-    protected $server_data;
+    protected $server_data = NULL;
+    
+    /**
+     * Parsed data of installation.
+     *
+     * @since      1.2.3
+     * @var array
+     */
+    protected $installation_data = NULL;
     
     /**
      * Spirit_Debug_Route constructor.
@@ -48,8 +56,33 @@ class Spirit_Debug_Route extends WP_REST_Controller {
      * @since      1.2.3
      */
     public function __construct () {
-        $this->server_data = $this->load_server_data();
-        $this->wordpress_data = $this->load_wordpress_data();
+    }
+    
+    /**
+     * Load route data
+     *
+     * @since      1.2.3
+     */
+    public function load_server_data () {
+        $this->server_data = $this->fetch_server_data();
+    }
+    
+    /**
+     * Load route data
+     *
+     * @since      1.2.3
+     */
+    public function load_wordpress_data () {
+        $this->wordpress_data = $this->fetch_wordpress_data();
+    }
+    
+    /**
+     * Load route data
+     *
+     * @since      1.2.3
+     */
+    public function load_installation_data () {
+        $this->installation_data = $this->fetch_installation_data();
     }
     
     /**
@@ -80,7 +113,7 @@ class Spirit_Debug_Route extends WP_REST_Controller {
      * @since      1.2.3
      * @return mixed
      */
-    private function load_server_data () {
+    private function fetch_server_data () {
         
         $data_response['server_architecture'] = function_exists('php_uname') ? php_uname('s') . php_uname('r') . php_uname('m') : false;
         $data_response['web_server_software'] = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : false;
@@ -103,8 +136,9 @@ class Spirit_Debug_Route extends WP_REST_Controller {
      * @since      1.2.3
      * @return mixed
      */
-    private function load_wordpress_data () {
+    private function fetch_wordpress_data () {
         global $wpdb;
+        include_once (ABSPATH . 'wp-admin/includes/plugin.php');
         
         $data_response['use_ssl'] = is_ssl();
         $data_response['users_can_register'] = get_option('users_can_register');
@@ -152,7 +186,7 @@ class Spirit_Debug_Route extends WP_REST_Controller {
         return $data_response;
     }
     
-    public function get_size_info () {
+    private function fetch_installation_data () {
         $uploads_dir = wp_upload_dir();
         
         $sizes = array (
@@ -216,6 +250,9 @@ class Spirit_Debug_Route extends WP_REST_Controller {
      * @return array|mixed
      */
     public function get_server_data () {
+        if (!$this->server_data)
+            $this->load_server_data();
+        
         return $this->server_data;
     }
     
@@ -228,7 +265,25 @@ class Spirit_Debug_Route extends WP_REST_Controller {
      * @return array|mixed
      */
     public function get_wordpress_data () {
+        if (!$this->wordpress_data)
+            $this->load_wordpress_data();
+        
         return $this->wordpress_data;
+    }
+    
+    /**
+     * Get installation data.
+     *
+     * Used to get the parsed data.
+     * @since      1.2.3
+     *
+     * @return array|mixed
+     */
+    public function get_installation_data () {
+        if (!$this->installation_data)
+            $this->load_installation_data();
+        
+        return $this->installation_data;
     }
     
     /**

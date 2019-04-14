@@ -83,13 +83,6 @@ class Spirit_Dashboard {
         $this->loader = new Spirit_Dashboard_Loader();
         
         $this->server = new Spirit_Com();
-        
-        // @TODO change this on stable versions
-        if (get_option('spirit_licence_server')) {
-            update_option('spirit_licence_server', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvdnBzbmFrLmNvbSIsImlhdCI6MTU1NDYyODUyMSwibmJmIjoxNTU0NjI4NTIxLCJleHAiOjE1NTUyMzMzMjEsImRhdGEiOnsidXNlciI6eyJpZCI6IjQifX19.sZyyVaCZWZ09XxIJ7i6V2Z9LqQ09DG4N___LNC5k3IQ');
-        } else {
-            add_option('spirit_licence_server', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvdnBzbmFrLmNvbSIsImlhdCI6MTU1NDYyODUyMSwibmJmIjoxNTU0NjI4NTIxLCJleHAiOjE1NTUyMzMzMjEsImRhdGEiOnsidXNlciI6eyJpZCI6IjQifX19.sZyyVaCZWZ09XxIJ7i6V2Z9LqQ09DG4N___LNC5k3IQ', '', 'yes');
-        }
     }
     
     /**
@@ -105,7 +98,7 @@ class Spirit_Dashboard {
             'update_server'
         ));
     
-        include_once(SPIRIT_ADMIN_DIR . 'register-spirit-pages.php');
+        include_once(SPIRIT_ADMIN_DIR . 'spirit-register-pages.php');
     }
     
     /**

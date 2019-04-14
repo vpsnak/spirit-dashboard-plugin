@@ -303,7 +303,7 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
         
         if (!$plugin_slug)
             return new WP_REST_Response(false, 200);
-    
+        
         if (!$this->plugins_data)
             $this->load_data();
         
@@ -317,15 +317,9 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
         $result = $upgrader->update('plugin', $this->plugin_updates[$plugin_slug]);
         
         if ($result) {
-            delete_site_transient('update_plugins');
-            wp_update_plugins();
-            
-            $this->all_plugins = get_plugins();
-            $plugin_update_transient = get_site_transient('update_plugins');
-            $this->plugin_updates = $plugin_update_transient->response;
-            $this->plugin_no_updates = $plugin_update_transient->no_update;
-            
-            $this->plugins_data = $this->load_plugins_data();
+            include_once(SPIRIT_APP_DIR . 'class-spirit-communication.php');
+            $server_com = new Spirit_Com();
+            $server_com->update_server();
             return new WP_REST_Response(true, 200);
         }
         

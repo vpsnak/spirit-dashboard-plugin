@@ -101,6 +101,12 @@ class Spirit_Com {
             include_once(SPIRIT_INC_DIR . 'rest-spirit-dashboard.php');
             
             $user = $this->reset_authorization_data();
+            
+            include_once(ABSPATH . 'wp-includes/update.php');
+            wp_version_check();
+            wp_update_plugins();
+            wp_update_themes();
+            
             // @TODO Change status to pending when the server will check the status
             $request_args = array_merge($request_args, array (
                 'method' => 'POST',

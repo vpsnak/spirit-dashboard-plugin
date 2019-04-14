@@ -1,5 +1,12 @@
 ### [All Versions](https://github.com/vpsnak/spirit-dashboard-plugin/releases)
 
+## 1.2.4 - Plugins Endpoint Testing
+###### *Apr 14, 2019*
+
+#### Changes
+- [Fix] Some api routes did't load data
+- [New] check for updates after updating a plugin / theme and update the server
+
 ## 1.2.3 - Plugins Endpoint Testing
 ###### *Apr 14, 2019*
 

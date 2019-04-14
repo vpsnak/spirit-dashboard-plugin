@@ -1,5 +1,21 @@
 ### [All Versions](https://github.com/vpsnak/spirit-dashboard-plugin/releases)
 
+## 1.2.3 - Plugins Endpoint Testing
+###### *Apr 14, 2019*
+
+Here are some highlights:
+- Admin pages
+- More data for the api
+- Safer authentication
+
+#### Changes
+- [Fix] Theme update now works
+- [New] Admin page for api settings
+- [New | Api] Debug api endpoint
+- [Fix] Admin page for api settings field password and now saves the values
+- [New | Api] Update server now uses username and password to request for token
+- [Tweak] Changed route constructors to functions that loads data
+
 ## 1.2.2 - Plugins Endpoint Testing
 ###### *Apr 10, 2019*
 

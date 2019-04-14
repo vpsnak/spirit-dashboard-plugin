@@ -138,7 +138,7 @@ class Spirit_Debug_Route extends WP_REST_Controller {
      */
     private function fetch_wordpress_data () {
         global $wpdb;
-        include_once (ABSPATH . 'wp-admin/includes/plugin.php');
+        include_once(ABSPATH . 'wp-admin/includes/plugin.php');
         
         $data_response['use_ssl'] = is_ssl();
         $data_response['users_can_register'] = get_option('users_can_register');
@@ -294,7 +294,11 @@ class Spirit_Debug_Route extends WP_REST_Controller {
      * @return WP_REST_Response
      */
     public function get_items ($request) {
-        return new WP_REST_Response($this->get_server_data(), 200);
+        return new WP_REST_Response(array (
+            'server' => $this->get_server_data(),
+            'wordpress' => $this->get_wordpress_data(),
+            'installation' => $this->get_installation_data(),
+        ), 200);
     }
     
     /**

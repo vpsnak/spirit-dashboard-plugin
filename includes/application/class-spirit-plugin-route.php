@@ -280,6 +280,9 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
         if (!$params['slug'])
             return new WP_REST_Response(false, 200);
         
+        if (!$this->plugins_data)
+            $this->load_data();
+        
         $plugin = $this->get_plugin_data($params['slug']);
         if (empty($plugin))
             return new WP_REST_Response(false, 200);
@@ -300,6 +303,9 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
         
         if (!$plugin_slug)
             return new WP_REST_Response(false, 200);
+    
+        if (!$this->plugins_data)
+            $this->load_data();
         
         $plugin_to_update = $this->needs_update($plugin_slug);
         if (empty($plugin_to_update))
@@ -334,7 +340,7 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      * @param $slug
      * @return array
      */
-    function needs_update ($slug) {
+    private function needs_update ($slug) {
         $plugin = $this->get_plugin_data($slug);
         
         if (empty($plugin))

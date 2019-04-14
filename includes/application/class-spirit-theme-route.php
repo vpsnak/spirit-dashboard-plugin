@@ -270,6 +270,9 @@ class Spirit_Theme_Route extends WP_REST_Controller {
         if (!$params['slug'])
             return new WP_REST_Response(false, 200);
         
+        if (!$this->themes_data)
+            $this->load_data();
+        
         $theme = $this->get_theme_data($params['slug']);
         if (empty($theme))
             return new WP_REST_Response(false, 200);
@@ -290,6 +293,9 @@ class Spirit_Theme_Route extends WP_REST_Controller {
         
         if (!$theme_slug)
             return new WP_REST_Response(false, 200);
+    
+        if (!$this->themes_data)
+            $this->load_data();
         
         $theme_to_update = $this->needs_update($theme_slug);
         if (empty($theme_to_update))
@@ -318,7 +324,7 @@ class Spirit_Theme_Route extends WP_REST_Controller {
      * @param $slug
      * @return array
      */
-    function needs_update ($slug) {
+    private function needs_update ($slug) {
         $theme = $this->get_theme_data($slug);
         
         if (empty($theme))

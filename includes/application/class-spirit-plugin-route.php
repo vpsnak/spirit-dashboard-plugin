@@ -317,9 +317,9 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
         $result = $upgrader->update('plugin', $this->plugin_updates[$plugin_slug]);
         
         if ($result) {
-            include_once(SPIRIT_APP_DIR . 'class-spirit-communication.php');
-            $server_com = new Spirit_Com();
-            $server_com->update_server();
+//            include_once(SPIRIT_APP_DIR . 'class-spirit-communication.php');
+//            $server_com = new Spirit_Com();
+//            $server_com->update_server();
             return new WP_REST_Response(true, 200);
         }
         

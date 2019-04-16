@@ -97,7 +97,12 @@ class Spirit_Dashboard {
             $this->server,
             'update_server'
         ));
-    
+        
+        add_action('upgrader_process_complete', array (
+            $this->server,
+            'update_server'
+        ),25,0);
+        
         include_once(SPIRIT_ADMIN_DIR . 'spirit-register-pages.php');
     }
     

@@ -33,6 +33,10 @@ class Spirit_Updater {
         
         $upgrader = new WP_Automatic_Updater();
         
+        add_filter('wp_doing_cron', array (
+            $this,
+            'get_true'
+        ));
         add_filter("auto_update_{$type}", array (
             $this,
             'get_true'
@@ -41,6 +45,10 @@ class Spirit_Updater {
         $result = $upgrader->update($type, $item);
         
         remove_filter("auto_update_{$type}", array (
+            $this,
+            'get_true'
+        ));
+        remove_filter("wp_doing_cron", array (
             $this,
             'get_true'
         ));

@@ -15,7 +15,7 @@ class Spirit_Updater extends WP_REST_Controller {
     /**
      * The namespace of this controller's route.
      *
-     * @since      x.x.x
+     * @since      1.2.6
      * @var string
      */
     protected $namespace = 'spirit-dashboard/v2';
@@ -23,7 +23,7 @@ class Spirit_Updater extends WP_REST_Controller {
     /**
      * The base of this controller's route.
      *
-     * @since      x.x.x
+     * @since      1.2.6
      * @var string
      */
     protected $rest_base = 'updater';
@@ -31,7 +31,7 @@ class Spirit_Updater extends WP_REST_Controller {
     /**
      * Register the routes for the objects of the controller.
      *
-     * @since      x.x.x
+     * @since      1.2.6
      */
     public function register_routes () {
         register_rest_route($this->namespace, '/' . $this->rest_base, array (
@@ -51,8 +51,8 @@ class Spirit_Updater extends WP_REST_Controller {
     }
     
     /**
-     * Handle psot action.
-     * @since      x.x.x
+     * Handle post action.
+     * @since      1.2.6
      *
      * @param WP_REST_Request $request
      * @return WP_REST_Response
@@ -109,7 +109,7 @@ class Spirit_Updater extends WP_REST_Controller {
     }
     
     /**
-     * Update an item, if appropriate.
+     * Update item handler.
      *
      * @since      1.1.0
      *
@@ -176,7 +176,7 @@ class Spirit_Updater extends WP_REST_Controller {
     
     /**
      * Check permissions to use the endpoints.
-     * @since      x.x.x
+     * @since      1.2.6
      *
      * @param WP_REST_Request $request Full data about the request.
      * @return bool

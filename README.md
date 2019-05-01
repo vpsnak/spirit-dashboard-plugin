@@ -20,9 +20,9 @@ The new routes available will be:
 * `/spirit-dashboard/v2/app` list data for Wordpress core, plugins and themes.
 * `/spirit-dashboard/v2/debug` list data for wordpress, server and installation.
 * `/spirit-dashboard/v2/plugin` list data for Wordpress plugins
-* `/spirit-dashboard/v2/plugin/<plugin_slug>` list / update Wordpress plugin (GET / POST)
+* `/spirit-dashboard/v2/plugin/<plugin_slug>` list / update Wordpress plugin
 * `/spirit-dashboard/v2/theme` list data for Wordpress plugins
-* `/spirit-dashboard/v2/theme/<theme_slug>` list / update Wordpress plugin (GET / POST)
+* `/spirit-dashboard/v2/theme/<theme_slug>` list / update Wordpress plugin
 
 == Installation ==
 

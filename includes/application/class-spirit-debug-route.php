@@ -55,7 +55,15 @@ class Spirit_Debug_Route extends WP_REST_Controller {
      *
      * @since      1.2.3
      */
-    public function __construct () {
+    public function __construct ($load_data = true) {
+        if ($load_data && !$this->wordpress_data)
+            $this->load_wordpress_data();
+        
+        if ($load_data && !$this->server_data)
+            $this->load_server_data();
+        
+        if ($load_data && !$this->installation_data)
+            $this->load_installation_data();
     }
     
     /**
@@ -250,9 +258,6 @@ class Spirit_Debug_Route extends WP_REST_Controller {
      * @return array|mixed
      */
     public function get_server_data () {
-        if (!$this->server_data)
-            $this->load_server_data();
-        
         return $this->server_data;
     }
     
@@ -265,9 +270,6 @@ class Spirit_Debug_Route extends WP_REST_Controller {
      * @return array|mixed
      */
     public function get_wordpress_data () {
-        if (!$this->wordpress_data)
-            $this->load_wordpress_data();
-        
         return $this->wordpress_data;
     }
     
@@ -280,9 +282,6 @@ class Spirit_Debug_Route extends WP_REST_Controller {
      * @return array|mixed
      */
     public function get_installation_data () {
-        if (!$this->installation_data)
-            $this->load_installation_data();
-        
         return $this->installation_data;
     }
     

@@ -63,7 +63,9 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      *
      * @since      1.1.0
      */
-    public function __construct () {
+    public function __construct ($load_data = true) {
+        if ($load_data && !$this->plugins_data)
+            $this->load_data();
     }
     
     /**
@@ -114,19 +116,7 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
                     'permissions_check'
                 ),
                 'args' => array (),
-            ),
-            array (
-                'methods' => WP_REST_Server::EDITABLE,
-                'callback' => array (
-                    $this,
-                    'update_item'
-                ),
-                'permission_callback' => array (
-                    $this,
-                    'permissions_check'
-                ),
-                'args' => array (),
-            ),
+            )
         ));
     }
     
@@ -230,9 +220,6 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      * @return array|mixed
      */
     public function get_plugins_data () {
-        if (!$this->plugins_data)
-            $this->load_data();
-        
         return $this->plugins_data;
     }
     
@@ -280,50 +267,11 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
         if (!$params['slug'])
             return new WP_REST_Response(false, 200);
         
-        if (!$this->plugins_data)
-            $this->load_data();
-        
         $plugin = $this->get_plugin_data($params['slug']);
         if (empty($plugin))
             return new WP_REST_Response(false, 200);
         
         return new WP_REST_Response($plugin, 200);
-    }
-    
-    /**
-     * Update plugin.
-     * @since      1.1.0
-     *
-     * @param WP_REST_Request $request
-     * @return WP_REST_Response
-     */
-    public function update_item ($request) {
-        $params = $request->get_params();
-        $plugin_slug = $params['slug'];
-        
-        if (!$plugin_slug)
-            return new WP_REST_Response(false, 200);
-        
-        if (!$this->plugins_data)
-            $this->load_data();
-        
-        $plugin_to_update = $this->needs_update($plugin_slug);
-        if (empty($plugin_to_update))
-            return new WP_REST_Response(false, 200);
-        
-        include_once('class-spirit-updater.php');
-        
-        $upgrader = new Spirit_Updater();
-        $result = $upgrader->update('plugin', $this->plugin_updates[$plugin_slug]);
-        
-        if ($result) {
-//            include_once(SPIRIT_APP_DIR . 'class-spirit-communication.php');
-//            $server_com = new Spirit_Com();
-//            $server_com->update_server();
-            return new WP_REST_Response(true, 200);
-        }
-        
-        return new WP_REST_Response(false, 200);
     }
     
     /**
@@ -334,7 +282,7 @@ class Spirit_Plugin_Route extends WP_REST_Controller {
      * @param $slug
      * @return array
      */
-    private function needs_update ($slug) {
+    public function needs_update ($slug) {
         $plugin = $this->get_plugin_data($slug);
         
         if (empty($plugin))

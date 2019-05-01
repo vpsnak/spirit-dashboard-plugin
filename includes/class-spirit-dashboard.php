@@ -80,6 +80,23 @@ class Spirit_Dashboard {
         
         include_once(SPIRIT_APP_DIR . 'class-spirit-communication.php');
         
+        add_action('rest_api_init', function() {
+            include_once(SPIRIT_APP_DIR . 'class-spirit-plugin-route.php');
+            include_once(SPIRIT_APP_DIR . 'class-spirit-theme-route.php');
+            include_once(SPIRIT_APP_DIR . 'class-spirit-debug-route.php');
+            include_once(SPIRIT_APP_DIR . 'class-spirit-updater.php');
+            
+            $spirit_plugin_route = new Spirit_Plugin_Route(false);
+            $spirit_theme_route = new Spirit_Theme_Route(false);
+            $spirit_debug_route = new Spirit_Debug_Route(false);
+            $spirit_plugin_route->register_routes();
+            $spirit_theme_route->register_routes();
+            $spirit_debug_route->register_routes();
+            
+            $updaterController = new Spirit_Updater();
+            $updaterController->register_routes();
+        });
+        
         $this->loader = new Spirit_Dashboard_Loader();
         
         $this->server = new Spirit_Com();
@@ -101,7 +118,7 @@ class Spirit_Dashboard {
         add_action('upgrader_process_complete', array (
             $this->server,
             'update_server'
-        ),25,0);
+        ), 25, 0);
         
         include_once(SPIRIT_ADMIN_DIR . 'spirit-register-pages.php');
     }

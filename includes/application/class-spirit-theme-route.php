@@ -55,7 +55,9 @@ class Spirit_Theme_Route extends WP_REST_Controller {
      *
      * @since      1.2.2
      */
-    public function __construct () {
+    public function __construct ($load_data = true) {
+        if ($load_data && !$this->themes_data)
+            $this->load_data();
     }
     
     /**
@@ -99,18 +101,6 @@ class Spirit_Theme_Route extends WP_REST_Controller {
                 'callback' => array (
                     $this,
                     'get_item'
-                ),
-                'permission_callback' => array (
-                    $this,
-                    'permissions_check'
-                ),
-                'args' => array (),
-            ),
-            array (
-                'methods' => WP_REST_Server::EDITABLE,
-                'callback' => array (
-                    $this,
-                    'update_item'
                 ),
                 'permission_callback' => array (
                     $this,
@@ -220,9 +210,6 @@ class Spirit_Theme_Route extends WP_REST_Controller {
      * @return array|mixed
      */
     public function get_themes_data () {
-        if (!$this->themes_data)
-            $this->load_data();
-        
         return $this->themes_data;
     }
     
@@ -270,50 +257,11 @@ class Spirit_Theme_Route extends WP_REST_Controller {
         if (!$params['slug'])
             return new WP_REST_Response(false, 200);
         
-        if (!$this->themes_data)
-            $this->load_data();
-        
         $theme = $this->get_theme_data($params['slug']);
         if (empty($theme))
             return new WP_REST_Response(false, 200);
         
         return new WP_REST_Response($theme, 200);
-    }
-    
-    /**
-     * Update theme.
-     * @since      1.2.2
-     *
-     * @param WP_REST_Request $request
-     * @return WP_REST_Response
-     */
-    public function update_item ($request) {
-        $params = $request->get_params();
-        $theme_slug = $params['slug'];
-        
-        if (!$theme_slug)
-            return new WP_REST_Response(false, 200);
-    
-        if (!$this->themes_data)
-            $this->load_data();
-        
-        $theme_to_update = $this->needs_update($theme_slug);
-        if (empty($theme_to_update))
-            return new WP_REST_Response(false, 200);
-        
-        include_once('class-spirit-updater.php');
-        
-        $upgrader = new Spirit_Updater();
-        $result = $upgrader->update('theme', (object)$this->theme_updates[$theme_slug]);
-        
-        if ($result) {
-            delete_site_transient('update_themes');
-            wp_update_themes();
-            
-            return new WP_REST_Response(true, 200);
-        }
-        
-        return new WP_REST_Response(false, 200);
     }
     
     /**
@@ -324,7 +272,7 @@ class Spirit_Theme_Route extends WP_REST_Controller {
      * @param $slug
      * @return array
      */
-    private function needs_update ($slug) {
+    public function needs_update ($slug) {
         $theme = $this->get_theme_data($slug);
         
         if (empty($theme))

@@ -1,5 +1,11 @@
 ### [All Versions](https://github.com/vpsnak/spirit-dashboard-plugin/releases)
 
+## 1.2.7 - Plugins Endpoint Testing
+###### *May 02, 2019*
+
+#### Changes
+- [New] added tweak on htaccess for basic auth
+
 ## 1.2.6 - Plugins Endpoint Testing
 ###### *May 02, 2019*
 

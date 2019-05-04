@@ -1,5 +1,11 @@
 ### [All Versions](https://github.com/vpsnak/spirit-dashboard-plugin/releases)
 
+## 1.2.8 - Plugins Endpoint Testing
+###### *May 04, 2019*
+
+#### Changes
+- [New] upgrade script to run on time snippets
+
 ## 1.2.7 - Plugins Endpoint Testing
 ###### *May 02, 2019*
 

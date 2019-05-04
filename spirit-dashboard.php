@@ -16,7 +16,7 @@
  * Plugin Name:       Spirit Dashboard
  * Plugin URI:        https://github.com/vpsnak/spirit-dashboard-plugin
  * Description:       This plugin is used to add endpoints for listing and updating Wordpress core, plugins, themes, translations.
- * Version:           1.2.7
+ * Version:           1.2.8
  * Author:            Vaggelis Pallis
  * Author URI:        https://github.com/vpsnak
  * License:           GPL-2.0+
@@ -32,7 +32,7 @@ defined('ABSPATH') or die('No script kiddies please!');
 /**
  * The defines.
  */
-define('SPIRIT_DASHBOARD_VERSION', '1.2.7');
+define('SPIRIT_DASHBOARD_VERSION', '1.2.8');
 define('SPIRIT_DASHBOARD_BASE_URL', plugin_dir_url(__FILE__));
 define('SPIRIT_BASE_DIR', __DIR__);
 define('SPIRIT_INC_DIR', __DIR__ . '/includes/');

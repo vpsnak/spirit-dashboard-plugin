@@ -56,9 +56,10 @@ class Spirit_Dashboard {
         if (defined('SPIRIT_DASHBOARD_VERSION')) {
             $this->version = SPIRIT_DASHBOARD_VERSION;
         } else {
-            $this->version = '0.0.1';
+            $this->version = '1.2.8';
         }
         $this->plugin_name = 'spirit-dashboard';
+        $this->upgrade_script();
         
         $this->load_dependencies();
         
@@ -121,6 +122,23 @@ class Spirit_Dashboard {
         ), 25, 0);
         
         include_once(SPIRIT_ADMIN_DIR . 'spirit-register-pages.php');
+    }
+    
+    /**
+     *
+     * The update scripts depending on version.
+     *
+     * @since     1.2.8
+     */
+    public function upgrade_script () {
+        $stored_version = get_option('spirit_dashboard_version');
+        $current_version = $this->version;
+        if (!$stored_version || $stored_version < $current_version) {
+            if (file_exists(SPIRIT_INC_DIR . "scripts/upgrade-$current_version.php")) {
+                include_once(SPIRIT_INC_DIR . "scripts/upgrade-$current_version.php");
+            }
+            update_option('spirit_dashboard_version', $current_version);
+        }
     }
     
     /**
